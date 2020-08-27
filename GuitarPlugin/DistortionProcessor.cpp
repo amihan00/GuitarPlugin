@@ -36,16 +36,23 @@ void DistortionProcessor::prepare(const juce::dsp::ProcessSpec& spec)
 
     distortionChain.prepare(spec);
     dryWetMixer.prepare(spec);
+
+    distortionChain.setBypassed<highPassFilterIndex> (true);
+    distortionChain.setBypassed<gainIndex> (true);
+    distortionChain.setBypassed<waveShaperIndex> (true);
+    distortionChain.setBypassed<peakFilterIndex> (true);
+    distortionChain.setBypassed<convolutionIndex> (true);
+
 }
 
 void DistortionProcessor::process(const juce::dsp::ProcessContextReplacing<float>& context)
 {
-    float blend = *audioProcessor.getValueTreeState().getRawParameterValue("blend");
+    float mix = *audioProcessor.getValueTreeState().getRawParameterValue("distortionMix");
 
     juce::dsp::AudioBlock<float>& block = context.getOutputBlock();
 
     dryWetMixer.pushDrySamples(block);
-    dryWetMixer.setWetMixProportion(blend);
+    dryWetMixer.setWetMixProportion(mix);
 
     updateDistortionParameters();
     setClippingFunction();
@@ -97,6 +104,13 @@ void DistortionProcessor::setClippingFunction()
                 return -1.0f;
             else
                 return x;
+        };
+        break;
+
+    case cubeClip:
+        waveShaperProcessor.functionToUse = [](float x)
+        {
+            return x * x * x;
         };
         break;
 

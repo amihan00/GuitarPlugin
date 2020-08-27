@@ -36,23 +36,14 @@ ReverbGui::ReverbGui()
     dampingLabel.setJustificationType(juce::Justification::centredTop);
     dampingLabel.attachToComponent(&dampingSlider, false);
 
-    // WET LEVEL
-    wetLevelSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    wetLevelSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&wetLevelSlider);
+    // MIX
+    reverbMixSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    reverbMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    addAndMakeVisible(&reverbMixSlider);
 
-    wetLevelLabel.setText("Wet Level", juce::NotificationType::dontSendNotification);
-    wetLevelLabel.setJustificationType(juce::Justification::centredTop);
-    wetLevelLabel.attachToComponent(&wetLevelSlider, false);
-
-    // DRY LEVEL
-    dryLevelSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    dryLevelSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&dryLevelSlider);
-
-    dryLevelLabel.setText("Dry Level", juce::NotificationType::dontSendNotification);
-    dryLevelLabel.setJustificationType(juce::Justification::centredTop);
-    dryLevelLabel.attachToComponent(&dryLevelSlider, false);
+    reverbMixLabel.setText("Mix", juce::NotificationType::dontSendNotification);
+    reverbMixLabel.setJustificationType(juce::Justification::centredTop);
+    reverbMixLabel.attachToComponent(&reverbMixSlider, false);
 
     // WITDH
     widthSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
@@ -62,15 +53,6 @@ ReverbGui::ReverbGui()
     widthLabel.setText("Width", juce::NotificationType::dontSendNotification);
     widthLabel.setJustificationType(juce::Justification::centredTop);
     widthLabel.attachToComponent(&widthSlider, false);
-
-    // FREEZE MODE
-    freezeModeSlider.setSliderStyle(juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    freezeModeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&freezeModeSlider);
-
-    freezeModeLabel.setText("Freeze Mode", juce::NotificationType::dontSendNotification);
-    freezeModeLabel.setJustificationType(juce::Justification::centredTop);
-    freezeModeLabel.attachToComponent(&freezeModeSlider, false);
 
     // REVERB BYPASS
     addAndMakeVisible(&reverbBypass);
@@ -94,6 +76,9 @@ void ReverbGui::paint (juce::Graphics& g)
     */
 
     g.fillAll (getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));   // clear the background
+
+    g.setColour(juce::Colours::red);
+    g.drawRect(getLocalBounds(), 5.0f);
 }
 
 void ReverbGui::resized()
@@ -101,11 +86,9 @@ void ReverbGui::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
-    roomSizeSlider.setBounds((((getWidth() / 8) * 1) - 50), ((getHeight() / 2) - 40), 100, 100);
-    dampingSlider.setBounds((((getWidth() / 8) * 2) - 50), ((getHeight() / 2) - 40), 100, 100);
-    wetLevelSlider.setBounds((((getWidth() / 8) * 3) - 50), ((getHeight() / 2) - 40), 100, 100);
-    dryLevelSlider.setBounds((((getWidth() / 8) * 4) - 50), ((getHeight() / 2) - 40), 100, 100);
-    widthSlider.setBounds((((getWidth() / 8) * 5) - 50), ((getHeight() / 2) - 40), 100, 100);
-    freezeModeSlider.setBounds((((getWidth() / 8) * 6) - 50), ((getHeight() / 2) - 40), 100, 100);
-    reverbBypass.setBounds((((getWidth() / 8) * 7) - 50), ((getHeight() / 2) - 5), 100, 30);
+    roomSizeSlider.setBounds((((getWidth() / 3) * 1) - 35), ((getHeight() / 4 * 1) - 40), 70, 70);
+    dampingSlider.setBounds((((getWidth() / 3) * 2) - 35), ((getHeight() / 4 * 1) - 40), 70, 70);
+    reverbMixSlider.setBounds((((getWidth() / 3) * 1) - 35), ((getHeight() / 4 * 2) - 40), 70, 70);
+    widthSlider.setBounds((((getWidth() / 3) * 2) - 35), ((getHeight() / 4 * 2) - 40), 70, 70);
+    reverbBypass.setBounds((((getWidth() / 3) * 1) - 50), ((getHeight() / 4 * 3) - 5), 70, 30);
 }

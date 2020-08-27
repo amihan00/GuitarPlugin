@@ -23,7 +23,7 @@ void DelayProcessor::prepare(const juce::dsp::ProcessSpec& spec)
 {
     const int numInputChannels = audioProcessor.getTotalNumInputChannels();
     const int delayBufferSize = 2 * (spec.sampleRate + spec.maximumBlockSize);
-    mSampleRate = spec.sampleRate;
+    sampleRate = spec.sampleRate;
 
     expectedReadPosition = -1;
 
@@ -43,21 +43,25 @@ void DelayProcessor::process(const juce::dsp::ProcessContextReplacing<float>& co
     context.getInputBlock().copyTo(dryBuffer);
 
     const float time = *audioProcessor.getValueTreeState().getRawParameterValue("time");
-    const float dryGainDB = *audioProcessor.getValueTreeState().getRawParameterValue("dryGain");
-    const float wetGainDB = *audioProcessor.getValueTreeState().getRawParameterValue("wetGain");
+    const float wetGain = *audioProcessor.getValueTreeState().getRawParameterValue("delayMix");
+    const float dryGain = 1.0f - wetGain;
 
-    const float dryGain = juce::Decibels::decibelsToGain(dryGainDB);
-    const float wetGain = juce::Decibels::decibelsToGain(wetGainDB);
-
-    int readPosition = static_cast<int>((delayBuffer.getNumSamples() + writePosition - (mSampleRate * time / 1000))) % delayBuffer.getNumSamples();
+    int readPosition = static_cast<int>((delayBuffer.getNumSamples() + writePosition - (sampleRate * time / 1000))) % delayBuffer.getNumSamples();
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         fillDelayBuffer(dryBuffer, channel, lastWetGain, wetGain, true);
+    }
 
-        dryBuffer.applyGainRamp(0, dryBuffer.getNumSamples(), lastDryGain, dryGain);
-        lastDryGain = dryGain;
+    /*******************************************************************************************************/
+    
+    dryBuffer.applyGainRamp(0, dryBuffer.getNumSamples(), lastDryGain, dryGain);
+    lastDryGain = dryGain;
 
+    /*******************************************************************************************************/
+
+    for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    {
         if (expectedReadPosition >= 0)
         {
             auto endGain = (readPosition == expectedReadPosition) ? 1.0f : 0.0f;

@@ -33,7 +33,7 @@ private:
 
     int writePosition{ 0 };
     int expectedReadPosition{ 0 };
-    double mSampleRate{ 44100 };
+    double sampleRate{ 44100 };
     float lastDryGain{ 0.0f };
     float lastWetGain{ 0.0f };
 

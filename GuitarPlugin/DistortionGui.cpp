@@ -21,6 +21,7 @@ DistortionGui::DistortionGui()
     // TONE
     toneSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     toneSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    toneSlider.setLookAndFeel(&distortionLAF);
     addAndMakeVisible(&toneSlider);
 
     toneLabel.setText("Tone", juce::NotificationType::dontSendNotification);
@@ -30,24 +31,27 @@ DistortionGui::DistortionGui()
     // GAIN
     gainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
     gainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    gainSlider.setLookAndFeel(&distortionLAF);
     addAndMakeVisible(&gainSlider);
 
     gainLabel.setText("Gain", juce::NotificationType::dontSendNotification);
     gainLabel.setJustificationType(juce::Justification::centredTop);
     gainLabel.attachToComponent(&gainSlider, false);
 
-    // BLEND
-    blendSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    blendSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&blendSlider);
+    // MIX
+    distortionMixSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    distortionMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    distortionMixSlider.setLookAndFeel(&distortionLAF);
+    addAndMakeVisible(&distortionMixSlider);
 
-    blendLabel.setText("Blend", juce::NotificationType::dontSendNotification);
-    blendLabel.setJustificationType(juce::Justification::centredTop);
-    blendLabel.attachToComponent(&blendSlider, false);
+    distortionMixLabel.setText("Mix", juce::NotificationType::dontSendNotification);
+    distortionMixLabel.setJustificationType(juce::Justification::centredTop);
+    distortionMixLabel.attachToComponent(&distortionMixSlider, false);
 
     // CLIPPING SELECTION
     clipMenu.addItem("atan", atanSoftClip);
     clipMenu.addItem("hard", hardClip);
+    clipMenu.addItem("cube", cubeClip);
     addAndMakeVisible(&clipMenu);
 
     clipMenuLabel.setText("Clipping function", juce::NotificationType::dontSendNotification);
@@ -60,6 +64,9 @@ DistortionGui::DistortionGui()
     distortionBypassLabel.setText("Bypass", juce::NotificationType::dontSendNotification);
     distortionBypassLabel.setJustificationType(juce::Justification::centred);
     distortionBypassLabel.attachToComponent(&distortionBypass, false);
+
+    // LOOK AND FEEL
+    distortionLAF.setColour(juce::Slider::thumbColourId, juce::Colours::green);
 }
 
 DistortionGui::~DistortionGui()
@@ -75,7 +82,10 @@ void DistortionGui::paint (juce::Graphics& g)
        drawing code..
     */
 
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+    // g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+
+    g.setColour(juce::Colours::green);
+    g.drawRect(getLocalBounds(), 5.0f);
 }
 
 void DistortionGui::resized()
@@ -83,9 +93,9 @@ void DistortionGui::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
-    toneSlider.setBounds(((getWidth() / 6) * 1) - 50, getHeight() / 2 - 40, 100, 100);
-    gainSlider.setBounds(((getWidth() / 6) * 2) - 50, getHeight() / 2 - 40, 100, 100);
-    blendSlider.setBounds(((getWidth() / 6) * 3) - 50, getHeight() / 2 - 40, 100, 100);
-    clipMenu.setBounds(((getWidth() / 6) * 4) - 50, getHeight() / 2 - 15, 100, 30);
-    distortionBypass.setBounds(((getWidth() / 6) * 5) - 50, getHeight() / 2 - 5, 100, 30);
+    toneSlider.setBounds(((getWidth() / 3) * 1) - 35, (getHeight() / 4 * 1) - 40, 70, 70);
+    gainSlider.setBounds(((getWidth() / 3) * 2) - 35, (getHeight() / 4 * 1) - 40, 70, 70);
+    distortionMixSlider.setBounds(((getWidth() / 3) * 1) - 35, (getHeight() / 4 * 2) - 40, 70, 70);
+    clipMenu.setBounds(((getWidth() / 3) * 2) - 35, (getHeight() / 4 * 2) - 15, 70, 30);
+    distortionBypass.setBounds(((getWidth() / 6) * 5) - 50, (getHeight() / 4 * 3) - 5, 100, 30);
 }

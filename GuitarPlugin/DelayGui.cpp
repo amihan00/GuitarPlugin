@@ -27,23 +27,23 @@ DelayGui::DelayGui()
     timeLabel.setJustificationType(juce::Justification::centred);
     timeLabel.attachToComponent(&timeSlider, false);
 
-    // DRY GAIN
-    dryGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    dryGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&dryGainSlider);
+    // FEEDBACK
+    feedbackSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    feedbackSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    addAndMakeVisible(&feedbackSlider);
 
-    dryGainLabel.setText("Dry Gain", juce::NotificationType::dontSendNotification);
-    dryGainLabel.setJustificationType(juce::Justification::centred);
-    dryGainLabel.attachToComponent(&dryGainSlider, false);
+    feedbackLabel.setText("Feedback", juce::NotificationType::dontSendNotification);
+    feedbackLabel.setJustificationType(juce::Justification::centred);
+    feedbackLabel.attachToComponent(&feedbackSlider, false);
 
-    // WET GAIN
-    wetGainSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
-    wetGainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
-    addAndMakeVisible(&wetGainSlider);
+    // MIX
+    delayMixSlider.setSliderStyle(juce::Slider::RotaryVerticalDrag);
+    delayMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
+    addAndMakeVisible(&delayMixSlider);
 
-    wetGainLabel.setText("Wet Gain", juce::NotificationType::dontSendNotification);
-    wetGainLabel.setJustificationType(juce::Justification::centred);
-    wetGainLabel.attachToComponent(&wetGainSlider, false);
+    delayMixLabel.setText("Mix", juce::NotificationType::dontSendNotification);
+    delayMixLabel.setJustificationType(juce::Justification::centred);
+    delayMixLabel.attachToComponent(&delayMixSlider, false);
 
     // DELAY BYPASS
     addAndMakeVisible(&delayBypass);
@@ -67,6 +67,9 @@ void DelayGui::paint (juce::Graphics& g)
     */
 
     g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));   // clear the background
+
+    g.setColour(juce::Colours::purple);
+    g.drawRect(getLocalBounds(), 5.0f);
 }
 
 void DelayGui::resized()
@@ -74,8 +77,8 @@ void DelayGui::resized()
     // This method is where you should set the bounds of any child
     // components that your component contains..
 
-    timeSlider.setBounds((getWidth() / 5) * 1 - 50, (getHeight() / 2) - 40, 100, 100);
-    dryGainSlider.setBounds((getWidth() / 5) * 2 - 50, (getHeight() / 2) - 40, 100, 100);
-    wetGainSlider.setBounds((getWidth() / 5) * 3 - 50, (getHeight() / 2) - 40, 100, 100);
-    delayBypass.setBounds((getWidth() / 5) * 4 - 50, (getHeight() / 2) - 5, 100, 30);
+    timeSlider.setBounds((getWidth() / 3) * 1 - 35, (getHeight() / 4 * 1) - 40, 70, 70);
+    feedbackSlider.setBounds((getWidth() / 3) * 2 - 35, (getHeight() / 4 * 1) - 40, 70, 70);
+    delayMixSlider.setBounds((getWidth() / 3) * 1.5f - 35, (getHeight() / 4 * 2) - 40, 70, 70);
+    delayBypass.setBounds((getWidth() / 4) * 3 - 50, (getHeight() / 4 * 3) - 5, 70, 30);
 }

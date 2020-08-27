@@ -25,19 +25,19 @@ public:
     void resized() override;
 
     juce::Slider& getTimeSlider() { return timeSlider; }
-    juce::Slider& getDryGainSlider() { return dryGainSlider; }
-    juce::Slider& getWetGainSlider() { return wetGainSlider; }
+    juce::Slider& getFeedbackSlider() { return feedbackSlider; }
+    juce::Slider& getDelayMixSlider() { return delayMixSlider; }
     juce::ToggleButton& getDelayBypassButton() { return delayBypass; }
 
 private:
     juce::Slider timeSlider;
-    juce::Slider dryGainSlider;
-    juce::Slider wetGainSlider;
+    juce::Slider feedbackSlider;
+    juce::Slider delayMixSlider;
     juce::ToggleButton delayBypass;
 
     juce::Label timeLabel;
-    juce::Label dryGainLabel;
-    juce::Label wetGainLabel;
+    juce::Label feedbackLabel;
+    juce::Label delayMixLabel;
     juce::Label delayBypassLabel;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (DelayGui)

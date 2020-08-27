@@ -29,7 +29,8 @@ private:
     enum
     {
         atanSoftClip,
-        hardClip
+        hardClip,
+        cubeClip
     };
 
     enum
@@ -41,12 +42,13 @@ private:
         convolutionIndex
     };
 
-    juce::dsp::DryWetMixer<float> dryWetMixer;
     juce::dsp::ProcessorChain<juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>,
         juce::dsp::Gain<float>,
         juce::dsp::WaveShaper<float>,
         juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>,
         juce::dsp::Convolution> distortionChain;
+
+    juce::dsp::DryWetMixer<float> dryWetMixer;
 
     void updateDistortionParameters();
     void setClippingFunction();

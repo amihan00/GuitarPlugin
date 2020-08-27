@@ -73,10 +73,6 @@ private:
     bool bypassDelay{ false };
     bool bypassReverb{ false };
 
-    bool test = true;
-
-    juce::dsp::ProcessorChain<> a;
-
     juce::AudioProcessorValueTreeState::ParameterLayout createParameters();
 
     //==============================================================================

@@ -230,22 +230,21 @@ juce::AudioProcessorValueTreeState::ParameterLayout GuitarPluginAudioProcessor::
     // DISTORTION PARAMETERS
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("tone", "Tone", 0.1f, 2000.0f, 500.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("gain", "Gain", 1.0f, 3000.0f, 1.0f));
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("blend", "Blend", 0.0f, 1.0f, 1.0f));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("distortionMix", "Distortion Mix", 0.0f, 1.0f, 1.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterChoice>("clip", "Clip", distortionClipChoices, 0));
     parameters.push_back(std::make_unique<juce::AudioParameterBool>("distortionBypass", "Distortion Bypass", true));
 
     // DELAY PARAMETERS
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("time", "Time", juce::NormalisableRange<float>(0.0f, 2000.0f, 1.0f), 500.0f, "ms"));
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("dryGain", "Dry Gain", juce::NormalisableRange<float>(-100.0f, 10.0f, 0.1f, std::log(0.5f) / std::log(100.0f / 106.0f)), 0.0f, "dB"));
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("wetGain", "Wet Gain", juce::NormalisableRange<float>(-100.0f, 0.0f, 0.1f, std::log(0.5f) / std::log(100.0f / 106.0f)), -5.0f, "dB"));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("feedback", "Feedback", 0.0f, 1.0f, 0.5f));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("delayMix", "Delay Mix", 0.0f, 1.0f, 0.5f));
     parameters.push_back(std::make_unique<juce::AudioParameterBool>("delayBypass", "Delay Bypass", true));
+
     // REVERB PARAMETERS
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("roomSize", "Room Size", 0.0f, 1.0f, 0.5f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("damping", "Damping", 0.0f, 1.0f, 0.5f));
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("wetLevel", "Wet Level", 0.0f, 1.0f, 0.33f));
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("dryLevel", "Dry Level", 0.0f, 1.0f, 0.4f));
+    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("reverbMix", "Reverb Mix", 0.0f, 1.0f, 0.5f));
     parameters.push_back(std::make_unique<juce::AudioParameterFloat>("width", "Width", 0.0f, 1.0f, 1.0f));
-    parameters.push_back(std::make_unique<juce::AudioParameterFloat>("freezeMode", "Freeze Mode", 0.0f, 1.0f, 0.0f));
     parameters.push_back(std::make_unique<juce::AudioParameterBool>("reverbBypass", "Reverb Bypass", true));
 
     return { parameters.begin(), parameters.end() };
