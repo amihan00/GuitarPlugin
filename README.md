@@ -1,7 +1,7 @@
 # Plugin
 
-This repo contains simple Reverb, Delay and Distortion VST3 plugins made in C++ and JUCE framework.
-Also included are a simple audio player plugin which can play WAV or MP3 files, and the JUCE plugin host for testing all the plugins.
+This repo contains a VST3 audio plugin with the effects of distortion, delay and reverb, made in C++ and using JUCE framework.
+Also included are a simple audio player plugin which can play WAV or MP3 files, and the JUCE plugin host for testing the plugin.
 
 To set up the plugins and the plugin host, do the following:
 
