@@ -19,7 +19,6 @@ void DistortionProcessor::prepare(const juce::dsp::ProcessSpec& spec)
 {
     auto& waveShaperProcessor = distortionChain.template get<waveShaperIndex>();
     auto& convolutionProcessor = distortionChain.template get<convolutionIndex>();
-    juce::File dir = "C:/guitar_amp.wav";
 
     waveShaperProcessor.functionToUse = [](float x)
     {
@@ -62,16 +61,19 @@ void DistortionProcessor::reset()
 
 void DistortionProcessor::updateDistortionParameters()
 {
-    auto& highPassFilterProcessor = distortionChain.template get<highPassFilterIndex>();
+    auto& highPassFilterProcessor1 = distortionChain.template get<highPassFilterIndex1>();
+    auto& highPassFilterProcessor2 = distortionChain.template get<highPassFilterIndex2>();
     auto& gainProcessor = distortionChain.template get<gainIndex>();
     auto& peakFilterProcessor = distortionChain.template get<peakFilterIndex>();
 
     float cutoff = *audioProcessor.getValueTreeState().getRawParameterValue("tone");
     float gain = *audioProcessor.getValueTreeState().getRawParameterValue("gain");
 
-    *highPassFilterProcessor.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderHighPass(audioProcessor.getSampleRate(), cutoff);
+    *highPassFilterProcessor1.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderHighPass(audioProcessor.getSampleRate(), cutoff);
+    *highPassFilterProcessor2.state = *juce::dsp::IIR::Coefficients<float>::makeFirstOrderHighPass(audioProcessor.getSampleRate(), cutoff);
+
     gainProcessor.setGainLinear(gain);
-    *peakFilterProcessor.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(audioProcessor.getSampleRate(), 500.0f, 1.5f, 0.1f);
+    *peakFilterProcessor.state = *juce::dsp::IIR::Coefficients<float>::makePeakFilter(audioProcessor.getSampleRate(), 600.0f, 0.7f, 0.3f);
 }
 
 void DistortionProcessor::setClippingFunction()
@@ -99,15 +101,6 @@ void DistortionProcessor::setClippingFunction()
                 return x;
         };
         break;
-
-    /*
-    case cubeClip:
-        waveShaperProcessor.functionToUse = [](float x)
-        {
-            return x * x * x;
-        };
-        break;
-    */
 
     default:
         break;

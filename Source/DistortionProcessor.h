@@ -36,7 +36,8 @@ private:
     // Processor chain members
     enum
     {
-        highPassFilterIndex,
+        highPassFilterIndex1,
+        highPassFilterIndex2,
         gainIndex,
         waveShaperIndex,
         peakFilterIndex,
@@ -44,6 +45,7 @@ private:
     };
 
     juce::dsp::ProcessorChain<juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>,
+                              juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>,
                               juce::dsp::Gain<float>,
                               juce::dsp::WaveShaper<float>,
                               juce::dsp::ProcessorDuplicator<juce::dsp::IIR::Filter<float>, juce::dsp::IIR::Coefficients<float>>,
